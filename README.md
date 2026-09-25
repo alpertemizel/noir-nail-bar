@@ -1,6 +1,6 @@
-# 💅 Noir Nail Bar — Akıllı Kuaför / Nail Salon Yönetim Sistemi
+# Noir Nail Bar
 
-> Yapay zeka destekli chatbot, JWT tabanlı kimlik doğrulama, rol bazlı yetkilendirme ve gerçek zamanlı randevu yönetimi sunan **full-stack salon yönetim platformu**.
+Gerçek bir tırnak bakım stüdyosu için geliştirilen full-stack salon yönetim sistemi. Müşteriler web arayüzü veya yapay zeka destekli chatbot üzerinden randevu alabilir; salon yöneticisi admin panelinden personel, vardiya ve gelir analitiğini yönetebilir.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Spring%20Boot-4.1.0-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" />
@@ -13,69 +13,61 @@
 
 ---
 
-## 📋 İçindekiler
+## İçindekiler
 
-- [Proje Hakkında](#-proje-hakkında)
-- [Temel Özellikler](#-temel-özellikler)
-- [Teknoloji Yığını](#-teknoloji-yığını)
-- [Mimari Yapı](#-mimari-yapı)
-- [Veritabanı Şeması](#-veritabanı-şeması)
-- [API Endpoint'leri](#-api-endpointleri)
-- [Kurulum](#-kurulum)
-- [Ekran Görüntüleri](#-ekran-görüntüleri)
-- [Lisans](#-lisans)
+- [Proje Hakkında](#proje-hakkında)
+- [Temel Özellikler](#temel-özellikler)
+- [Teknoloji Yığını](#teknoloji-yığını)
+- [Mimari Yapı](#mimari-yapı)
+- [Veritabanı Şeması](#veritabanı-şeması)
+- [API Endpoint'leri](#api-endpointleri)
+- [Kurulum](#kurulum)
+- [Proje İstatistikleri](#proje-istatistikleri)
 
 ---
 
-## 🎯 Proje Hakkında
+## Proje Hakkında
 
-**Noir Nail Bar**, gerçek bir tırnak bakım stüdyosu için sıfırdan geliştirilen kapsamlı bir salon yönetim sistemidir. Müşteriler web arayüzü veya **AI chatbot** üzerinden randevu alabilir; salon yöneticisi ise admin panelinden tüm operasyonu (personel, vardiya, gelir analitiği) kontrol edebilir.
-
-### 🤖 AI Chatbot — Spring AI + Google Gemini
-
-Projenin en öne çıkan özelliği, **Spring AI Function Calling** altyapısıyla geliştirilmiş yapay zeka asistanıdır. Chatbot:
+**Noir Nail Bar**, müşteri randevu sürecini uçtan uca dijitalleştiren bir salon yönetim platformudur. Projenin ayırt edici özelliği, **Spring AI Function Calling** altyapısıyla geliştirilmiş AI chatbot'udur. Chatbot sıradan bir sohbet aracı değil — veritabanıyla doğrudan etkileşime giren otonom bir AI Agent olarak çalışır:
 
 - Hizmet kataloğunu ve güncel fiyatları veritabanından çeker
-- Müsait randevu saatlerini sorgular ve müşteriye sunar
-- Müşteriden gerekli bilgileri (ad, telefon, hizmet tercihi) alarak **doğrudan veritabanına randevu kaydı oluşturur**
+- Müsait randevu saatlerini sorgulayıp müşteriye sunar
+- Müşteriden gerekli bilgileri alarak doğrudan veritabanına randevu kaydı oluşturur
 - Konuşma geçmişini oturum bazlı bellek ile korur (son 20 mesaj penceresi)
-- Türkçe, profesyonel ve sıcak bir üslupla yanıt verir
-
-> Chatbot sadece bir sohbet aracı değil, veritabanıyla doğrudan etkileşime giren otonom bir **AI Agent**'tır.
 
 ---
 
-## ✨ Temel Özellikler
+## Temel Özellikler
 
-### 🧑‍💼 Müşteri Tarafı
-- **4 adımlı randevu sihirbazı** — Hizmet Seç → Tarih Seç → Saat Seç → Bilgi Gir
-- **AI Chatbot** ile doğal dilde randevu alma
+### Müşteri Tarafı
+- 4 adımlı randevu sihirbazı — Hizmet Seç → Tarih Seç → Saat Seç → Bilgi Gir
+- AI Chatbot ile doğal dilde randevu alma
 - Personel seçimi (opsiyonel)
 - Gerçek zamanlı müsaitlik kontrolü
 
-### 👩‍🔧 Personel (STAFF) Paneli
+### Personel (STAFF) Paneli
 - Günlük / filtrelenebilir randevu takvimi
 - Randevu durumu güncelleme (Onay, İptal, Tamamla)
 - Personel atama ve randevu erteleme
 - Müşteri notları yönetimi (alerji, tercih, hassasiyet)
 - Kendi vardiya programını görüntüleme
 
-### 🛡️ Admin (SUPER_ADMIN) Paneli
+### Admin (SUPER_ADMIN) Paneli
 - **Dashboard** — Günlük istatistikler (randevu, bekleyen, aktif personel, tamamlanan)
 - **Aylık analitik** — Toplam/ortalama ciro, personel & hizmet bazlı gelir dağılımı
 - Personel yönetimi (kayıt, aktif/pasif, silme)
 - Vardiya yönetimi (haftalık çalışma saatleri, izin günleri)
 - Hizmet kataloğu yönetimi (fiyat, süre, ekleme/silme)
 
-### 🔐 Güvenlik
-- **JWT Authentication** — Stateless, Bearer token tabanlı kimlik doğrulama
-- **BCrypt** ile şifre hashleme
-- **Role-Based Access Control** — Endpoint seviyesinde SUPER_ADMIN / STAFF yetki ayrımı
-- CSRF koruması devre dışı (stateless API), CORS yapılandırması
+### Güvenlik
+- JWT Authentication — Stateless, Bearer token tabanlı kimlik doğrulama
+- BCrypt ile şifre hashleme
+- Role-Based Access Control — Endpoint seviyesinde SUPER_ADMIN / STAFF yetki ayrımı
+- CSRF devre dışı (stateless API), CORS yapılandırması
 
 ---
 
-## 🛠 Teknoloji Yığını
+## Teknoloji Yığını
 
 | Katman | Teknoloji |
 |---|---|
@@ -91,9 +83,9 @@ Projenin en öne çıkan özelliği, **Spring AI Function Calling** altyapısıy
 
 ---
 
-## 🏗 Mimari Yapı
+## Mimari Yapı
 
-Proje **katmanlı mimari (Layered Architecture)** prensibine uygun geliştirilmiştir:
+Proje katmanlı mimari (Layered Architecture) prensibine uygun geliştirilmiştir:
 
 ```
 src/main/java/com/alper/nailbar/
@@ -164,7 +156,7 @@ Müşteri Mesajı → ChatController → ChatService → Spring AI ChatClient
 
 ---
 
-## 🗄 Veritabanı Şeması
+## Veritabanı Şeması
 
 ```
 ┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
@@ -209,9 +201,9 @@ Müşteri Mesajı → ChatController → ChatService → Spring AI ChatClient
 
 ---
 
-## 🌐 API Endpoint'leri
+## API Endpoint'leri
 
-### 🔓 Herkese Açık
+### Herkese Açık
 
 | Metot | Endpoint | Açıklama |
 |---|---|---|
@@ -222,7 +214,7 @@ Müşteri Mesajı → ChatController → ChatService → Spring AI ChatClient
 | `GET` | `/api/staff/public` | Aktif personel listesi |
 | `POST` | `/api/chat` | AI Chatbot ile konuş |
 
-### 🔑 STAFF & SUPER_ADMIN
+### STAFF & SUPER_ADMIN
 
 | Metot | Endpoint | Açıklama |
 |---|---|---|
@@ -233,7 +225,7 @@ Müşteri Mesajı → ChatController → ChatService → Spring AI ChatClient
 | `DELETE` | `/api/appointments/{id}` | Randevu sil |
 | `CRUD` | `/api/customer-notes/**` | Müşteri notları yönetimi |
 
-### 🛡️ Sadece SUPER_ADMIN
+### Sadece SUPER_ADMIN
 
 | Metot | Endpoint | Açıklama |
 |---|---|---|
@@ -246,7 +238,7 @@ Müşteri Mesajı → ChatController → ChatService → Spring AI ChatClient
 
 ---
 
-## 🚀 Kurulum
+## Kurulum
 
 ### Gereksinimler
 
@@ -257,7 +249,7 @@ Müşteri Mesajı → ChatController → ChatService → Spring AI ChatClient
 ### 1. Projeyi Klonlayın
 
 ```bash
-git clone https://github.com/<kullanici-adi>/noir-nail-bar.git
+git clone https://github.com/alpertemizel/noir-nail-bar.git
 cd noir-nail-bar
 ```
 
@@ -291,19 +283,11 @@ Uygulama `http://localhost:8080` adresinde ayağa kalkacaktır.
 |---|---|---|
 | SUPER_ADMIN | `alpertemizell@gmail.com` | `admin123` |
 
-> ⚠️ **Üretim ortamında varsayılan şifreyi mutlaka değiştirin.**
+> **Not:** Üretim ortamında varsayılan şifreyi mutlaka değiştirin.
 
 ---
 
-## 📸 Ekran Görüntüleri
-
-| Müşteri Randevu Sayfası | AI Chatbot | Admin Paneli |
-|---|---|---|
-| 4 adımlı randevu sihirbazı | Doğal dilde randevu alma | Dashboard & analitik |
-
----
-
-## 📁 Proje İstatistikleri
+## Proje İstatistikleri
 
 | Metrik | Değer |
 |---|---|
@@ -317,7 +301,7 @@ Uygulama `http://localhost:8080` adresinde ayağa kalkacaktır.
 
 ---
 
-## 🔮 Gelecek Planları
+## Yol Haritası
 
 - [ ] SMS / E-posta ile randevu hatırlatma bildirimleri
 - [ ] Müşteri kayıt ve giriş sistemi
@@ -327,13 +311,13 @@ Uygulama `http://localhost:8080` adresinde ayağa kalkacaktır.
 
 ---
 
-## 📄 Lisans
+## Lisans
 
 Bu proje kişisel portföy amaçlı geliştirilmiştir.
 
 ---
 
 <p align="center">
-  <b>Geliştirici:</b> Alper Temizell<br>
+  <b>Geliştirici:</b> Alper Temizel<br>
   <a href="mailto:alpertemizell@gmail.com">alpertemizell@gmail.com</a>
 </p>
