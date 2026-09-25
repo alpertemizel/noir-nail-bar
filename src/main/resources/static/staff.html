@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noir Nail Bar — Personel Paneli</title>
+    <meta name="description" content="Noir Nail Bar personel paneli — randevularım ve vardiyalarım.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --c-bg: #080808; --c-bg-2: #111111; --c-bg-3: #1a1a1a; --c-bg-4: #222222;
+            --c-gold: #c9a84c; --c-gold-light: #e2c97e; --c-gold-dark: #a07c32;
+            --c-cream: #f5f0e8; --c-cream-muted: rgba(245,240,232,0.55); --c-cream-faint: rgba(245,240,232,0.18);
+            --border-gold: rgba(201,168,76,0.2); --border-gold-lg: rgba(201,168,76,0.45);
+            --font-serif: 'Playfair Display', Georgia, serif; --font-sans: 'Inter', system-ui, sans-serif;
+            --transition: 0.3s cubic-bezier(0.25,0.8,0.25,1);
+            --sidebar-w: 240px;
+        }
+        html, body { height: 100%; min-height: 100dvh; overflow-y: scroll; scrollbar-gutter: stable; }
+        body {
+            background: var(--c-bg); color: var(--c-cream);
+            font-family: var(--font-sans); -webkit-font-smoothing: antialiased;
+            display: flex; min-height: 100dvh;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--c-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border-gold-lg); border-radius: 3px; }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-w); background: var(--c-bg-2); border-right: 1px solid var(--border-gold);
+            display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+        }
+        .sidebar-logo { padding: 28px 24px 24px; border-bottom: 1px solid var(--border-gold); }
+        .sidebar-logo-title { font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 0.2em; }
+        .sidebar-logo-title span { color: var(--c-gold); }
+        .sidebar-logo-sub { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--c-cream-muted); text-transform: uppercase; margin-top: 3px; }
+        .sidebar-nav { flex: 1; padding: 16px 0; overflow-y: auto; }
+        .nav-section-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-cream-faint); padding: 12px 24px 4px; }
+        .nav-item {
+            display: flex; align-items: center; gap: 10px; padding: 11px 24px; cursor: pointer;
+            transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease; font-size: 0.85rem; color: var(--c-cream-muted);
+            border-left: 3px solid transparent; user-select: none;
+        }
+        .nav-item:hover { background: rgba(201,168,76,0.05); color: var(--c-cream); }
+        .nav-item.active { color: var(--c-gold); border-left-color: var(--c-gold); background: rgba(201,168,76,0.08); }
+        .sidebar-footer { padding: 16px 24px; border-top: 1px solid var(--border-gold); }
+        .user-pill { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: rgba(201,168,76,0.06); border: 1px solid var(--border-gold); border-radius: 10px; margin-bottom: 10px; }
+        .user-pill-avatar { width: 30px; height: 30px; background: linear-gradient(135deg, var(--c-gold-dark), var(--c-gold)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; color: #0a0a0a; flex-shrink: 0; }
+        .user-pill-name { font-size: 0.82rem; font-weight: 500; line-height: 1.2; }
+        .user-pill-role { font-size: 0.65rem; color: var(--c-gold); text-transform: uppercase; letter-spacing: 0.1em; }
+        .btn-logout { width: 100%; padding: 9px; background: transparent; border: 1px solid var(--border-gold); border-radius: 8px; color: var(--c-cream-muted); font-family: var(--font-sans); font-size: 0.78rem; cursor: pointer; transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-logout:hover { border-color: #c85050; color: #f08080; background: rgba(200,80,80,0.08); }
+
+        /* Main */
+        .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100dvh; }
+        .topbar { background: var(--c-bg-2); border-bottom: 1px solid var(--border-gold); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+        .topbar-title { font-size: 1.1rem; font-weight: 600; }
+        .topbar-date { font-size: 0.78rem; color: var(--c-cream-muted); }
+        .content { padding: 32px; flex: 1; }
+
+        /* Profile Card */
+        .profile-card {
+            background: var(--c-bg-2); border: 1px solid var(--border-gold); border-radius: 16px;
+            padding: 28px; display: flex; align-items: center; gap: 20px; margin-bottom: 28px;
+        }
+        .profile-avatar {
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, var(--c-gold-dark), var(--c-gold-light));
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-serif); font-size: 1.6rem; color: #0a0a0a; font-weight: 700;
+            flex-shrink: 0;
+        }
+        .profile-name { font-size: 1.1rem; font-weight: 600; }
+        .profile-email { font-size: 0.83rem; color: var(--c-cream-muted); margin-top: 2px; }
+        .profile-phone { font-size: 0.83rem; color: var(--c-cream-muted); margin-top: 2px; }
+        .profile-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 12px; background: rgba(201,168,76,0.12); border: 1px solid var(--border-gold); border-radius: 999px; font-size: 0.7rem; color: var(--c-gold); font-weight: 600; letter-spacing: 0.08em; margin-top: 8px; }
+
+        /* Section Card */
+        .section-card { background: var(--c-bg-2); border: 1px solid var(--border-gold); border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
+        .section-card-header { padding: 18px 24px; border-bottom: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .section-card-title { font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+
+        /* Table */
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { padding: 12px 20px; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-cream-muted); text-align: left; border-bottom: 1px solid var(--border-gold); background: rgba(201,168,76,0.03); }
+        .data-table td { padding: 14px 20px; font-size: 0.85rem; border-bottom: 1px solid rgba(201,168,76,0.08); }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tbody tr { transition: var(--transition); }
+        .data-table tbody tr:hover { background: rgba(201,168,76,0.04); }
+
+        /* Badge */
+        .badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; }
+        .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+        .badge-pending  { background: rgba(201,168,76,0.15); color: var(--c-gold); }
+        .badge-pending .badge-dot { background: var(--c-gold); }
+        .badge-approved { background: rgba(80,140,220,0.15); color: #6eb4f7; }
+        .badge-approved .badge-dot { background: #6eb4f7; }
+        .badge-completed { background: rgba(80,200,120,0.15); color: #5dc87c; }
+        .badge-completed .badge-dot { background: #5dc87c; }
+        .badge-cancelled { background: rgba(220,80,80,0.15); color: #f07070; }
+        .badge-cancelled .badge-dot { background: #f07070; }
+        .badge-offday { background: rgba(200,80,80,0.12); color: #f08080; }
+        .badge-working { background: rgba(80,200,120,0.12); color: #5dc87c; }
+
+        /* Status Modal Options */
+        .btn-status-option {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px; border-radius: 10px; font-family: var(--font-sans);
+            font-size: 0.85rem; cursor: pointer; transition: var(--transition);
+            border: 1px solid transparent; text-align: left; width: 100%;
+        }
+        .status-opt-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .btn-status-option.approved-opt { background: rgba(80,140,220,0.12); border-color: rgba(80,140,220,0.35); color: #6eb4f7; }
+        .btn-status-option.approved-opt:hover { background: rgba(80,140,220,0.25); border-color: #6eb4f7; transform: translateY(-1px); }
+        .btn-status-option.completed-opt { background: rgba(80,200,120,0.12); border-color: rgba(80,200,120,0.35); color: #5dc87c; }
+        .btn-status-option.completed-opt:hover { background: rgba(80,200,120,0.25); border-color: #5dc87c; transform: translateY(-1px); }
+        .btn-status-option.cancelled-opt { background: rgba(220,80,80,0.12); border-color: rgba(220,80,80,0.35); color: #f07070; }
+        .btn-status-option.cancelled-opt:hover { background: rgba(220,80,80,0.25); border-color: #f07070; transform: translateY(-1px); }
+        .btn-status-option.pending-opt { background: rgba(201,168,76,0.08); border-color: var(--border-gold); color: var(--c-gold); }
+        .btn-status-option.pending-opt:hover { background: rgba(201,168,76,0.18); border-color: var(--c-gold); transform: translateY(-1px); }
+        .btn-status-option.disabled-future { opacity: 0.45; cursor: not-allowed; }
+        .btn-status-option.disabled-future:hover { transform: none; background: rgba(80,200,120,0.12); border-color: rgba(80,200,120,0.35); }
+
+        /* Profile Stats Grid */
+        .profile-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .profile-stat-box {
+            background: var(--c-bg-2);
+            border: 1px solid var(--border-gold);
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+        .profile-stat-box:hover {
+            border-color: var(--c-gold);
+            background: rgba(201,168,76,0.04);
+            transform: translateY(-1px);
+        }
+        .profile-stat-box .stat-info { display: flex; flex-direction: column; gap: 3px; }
+        .profile-stat-box .num {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--c-gold);
+            font-family: var(--font-serif);
+            line-height: 1.1;
+        }
+        .profile-stat-box .lbl {
+            font-size: 0.68rem;
+            color: var(--c-cream-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* Filter */
+        .filter-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .filter-input { padding: 8px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border-gold); border-radius: 8px; color: var(--c-cream); font-family: var(--font-sans); font-size: 0.82rem; outline: none; transition: var(--transition); }
+        .filter-input:focus { border-color: var(--c-gold); }
+        .filter-input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7) sepia(1) hue-rotate(10deg); cursor: pointer; }
+
+        /* Btn */
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-family: var(--font-sans); font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: var(--transition); border: none; }
+        .btn-ghost { background: transparent; border: 1px solid var(--border-gold); color: var(--c-cream-muted); }
+        .btn-ghost:hover { border-color: var(--c-gold); color: var(--c-gold); }
+        .btn-success-action { background: rgba(80,200,120,0.12); border: 1px solid rgba(80,200,120,0.3); color: #5dc87c; }
+        .btn-success-action:hover { background: rgba(80,200,120,0.2); }
+        .btn-icon-sm { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border-gold); background: transparent; color: var(--c-cream-muted); cursor: pointer; transition: var(--transition); }
+        .btn-icon-sm.success-color:hover { border-color: rgba(80,200,120,0.5); color: #5dc87c; background: rgba(80,200,120,0.08); }
+
+        /* Page */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* Shift grid */
+        .shift-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; padding: 20px; }
+        .shift-day { border: 1px solid var(--border-gold); border-radius: 12px; padding: 14px; text-align: center; }
+        .shift-day-name { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-cream-muted); margin-bottom: 8px; }
+        .shift-day-time { font-size: 0.78rem; font-weight: 600; color: var(--c-gold); }
+        .shift-day-time.off { color: #f08080; font-size: 0.72rem; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 28px; right: 28px; background: var(--c-bg-3); border: 1px solid var(--border-gold-lg); border-radius: 10px; padding: 12px 18px; font-size: 0.85rem; box-shadow: 0 8px 24px rgba(0,0,0,0.4); z-index: 300; transform: translateY(80px); opacity: 0; transition: all 0.35s cubic-bezier(0.25,0.8,0.25,1); max-width: 320px; }
+        .toast.show { transform: none; opacity: 1; }
+        .toast.success { border-color: rgba(80,200,120,0.5); color: #5dc87c; }
+        .toast.error { border-color: rgba(220,80,80,0.5); color: #f08080; }
+
+        .loading-row td { text-align: center; padding: 32px; color: var(--c-cream-muted); font-size: 0.85rem; }
+
+        @media (max-width: 900px) { .shift-grid { grid-template-columns: repeat(3,1fr); } }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-logo" onclick="showPage('profile')" style="cursor: pointer;" title="Ana Sayfaya Git">
+        <div class="sidebar-logo-title">NOIR <span>NAIL BAR</span></div>
+        <div class="sidebar-logo-sub">Personel Paneli</div>
+    </div>
+    <nav class="sidebar-nav">
+        <div class="nav-section-label">Panelim</div>
+        <div class="nav-item active" id="nav-profile" onclick="showPage('profile')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+            Profilim
+        </div>
+        <div class="nav-item" id="nav-my-appointments" onclick="showPage('my-appointments')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Randevularım
+        </div>
+        <div class="nav-item" id="nav-my-shifts" onclick="showPage('my-shifts')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Vardiyalarım
+        </div>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="user-pill">
+            <div class="user-pill-avatar" id="avatar-initials">P</div>
+            <div>
+                <div class="user-pill-name" id="user-name-display">Personel</div>
+                <div class="user-pill-role">Staff</div>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logout()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Çıkış Yap
+        </button>
+    </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+    <header class="topbar">
+        <div class="topbar-title" id="page-title">Profilim</div>
+        <div class="topbar-date" id="topbar-date"></div>
+    </header>
+
+    <div class="content">
+
+        <!-- PROFILE PAGE -->
+        <div id="page-profile" class="page active">
+            <!-- Profil Bilgi Kartı -->
+            <div class="profile-card" id="profile-card">
+                <div class="profile-avatar" id="prof-avatar">P</div>
+                <div style="flex:1;">
+                    <div class="profile-name" id="prof-name">Yükleniyor…</div>
+                    <div class="profile-email" id="prof-email"></div>
+                    <div class="profile-phone" id="prof-phone"></div>
+                    <div class="profile-badge" id="prof-role">STAFF</div>
+                </div>
+            </div>
+
+            <!-- Mini İstatistik Sayaçları -->
+            <div class="profile-stats-grid">
+                <div class="profile-stat-box">
+                    <div class="stat-info">
+                        <div class="lbl">Bugünkü Randevu</div>
+                        <div class="num" id="stat-count-today">0</div>
+                    </div>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--c-gold);opacity:0.8;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div class="profile-stat-box">
+                    <div class="stat-info">
+                        <div class="lbl">Onay Bekleyen</div>
+                        <div class="num" id="stat-count-pending">0</div>
+                    </div>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--c-gold);opacity:0.8;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="profile-stat-box">
+                    <div class="stat-info">
+                        <div class="lbl">Tamamlanan</div>
+                        <div class="num" id="stat-count-completed">0</div>
+                    </div>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#5dc87c;opacity:0.8;"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="profile-stat-box">
+                    <div class="stat-info">
+                        <div class="lbl">Bu Ayki Randevu</div>
+                        <div class="num" id="stat-count-all">0</div>
+                    </div>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--c-gold);opacity:0.8;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+            </div>
+
+            <!-- BAR 1: BUGÜNKÜ RANDEVULARIM -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="section-card-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        <span>Bugünkü Randevularım</span>
+                        <span class="badge badge-approved" id="today-badge-count" style="font-size:0.68rem; margin-left:6px;">0 Randevu</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <button class="btn btn-ghost" onclick="loadTodayAppointments()" title="Bugünkü listeyi yenile">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                            Yenile
+                        </button>
+                    </div>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead><tr><th>Müşteri</th><th>Telefon</th><th>Hizmet</th><th>Saat</th><th>Durum</th><th>İşlem</th></tr></thead>
+                        <tbody id="today-appts-tbody">
+                            <tr class="loading-row"><td colspan="6">Yükleniyor…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- BAR 2: BU AYKİ RANDEVULARIM (AYRI BİR BAR İÇİNDE) -->
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="section-card-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        <span>Bu Ayki Randevularım</span>
+                        <span class="badge badge-pending" id="prof-all-badge-count" style="font-size:0.68rem; margin-left:6px;">0 Randevu</span>
+                    </div>
+                    <div class="filter-bar">
+                        <input type="text" id="prof-all-search" class="filter-input" placeholder="Müşteri veya hizmet ara…" oninput="filterProfileAllAppointments()" style="min-width:180px;">
+                        <select id="prof-all-status-filter" class="filter-input" onchange="filterProfileAllAppointments()">
+                            <option value="">Tüm Durumlar</option>
+                            <option value="PENDING">Bekleyen</option>
+                            <option value="APPROVED">Onaylandı</option>
+                            <option value="COMPLETED">Tamamlandı</option>
+                            <option value="CANCELLED">İptal</option>
+                        </select>
+                        <input type="date" id="prof-all-date-filter" class="filter-input" onchange="loadProfileAllAppointments()" title="Tarihe göre filtrele">
+                        <button class="btn btn-ghost" onclick="clearProfileAllFilters()" title="Filtreleri Temizle">Temizle</button>
+                    </div>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead><tr><th>Müşteri</th><th>Telefon</th><th>Hizmet</th><th>Tarih & Saat</th><th>Durum</th><th>İşlem</th></tr></thead>
+                        <tbody id="prof-all-appts-tbody">
+                            <tr class="loading-row"><td colspan="6">Yükleniyor…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- MY APPOINTMENTS PAGE -->
+        <div id="page-my-appointments" class="page">
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="section-card-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        Bu Ayki Randevularım
+                    </div>
+                    <div class="filter-bar">
+                        <input type="date" id="my-appt-date-filter" class="filter-input" onchange="loadMyAppointments()" title="Tarihe göre filtrele">
+                        <button class="btn btn-ghost" onclick="clearMyFilter()">Temizle</button>
+                    </div>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead><tr><th>Müşteri</th><th>Telefon</th><th>Hizmet</th><th>Tarih & Saat</th><th>Durum</th><th>İşlem</th></tr></thead>
+                        <tbody id="my-appts-tbody">
+                            <tr class="loading-row"><td colspan="6">Yükleniyor…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- MY SHIFTS PAGE -->
+        <div id="page-my-shifts" class="page">
+            <div class="section-card">
+                <div class="section-card-header">
+                    <div class="section-card-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Haftalık Vardiya Planım
+                    </div>
+                </div>
+                <div id="shifts-container">
+                    <div style="padding:32px;text-align:center;color:var(--c-cream-muted)">Yükleniyor…</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- Customer Notes Modal -->
+<div id="notes-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); z-index:200; align-items:center; justify-content:center;">
+    <div style="background:var(--c-bg-2); border:1px solid var(--border-gold-lg); border-radius:16px; width:90%; max-width:500px; padding:24px; box-shadow:0 12px 36px rgba(0,0,0,0.8);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="font-size:1.05rem; color:var(--c-gold);" id="notes-modal-title">Müşteri Notları</h3>
+            <button onclick="closeNotesModal()" style="background:transparent; border:none; color:var(--c-cream-muted); font-size:1.5rem; cursor:pointer; line-height:1;">&times;</button>
+        </div>
+        <div id="notes-modal-content" style="max-height:220px; overflow-y:auto; margin-bottom:16px; padding-right:4px;">
+            <p style="color:var(--c-cream-muted); font-size:0.85rem;">Notlar yükleniyor...</p>
+        </div>
+        <div>
+            <textarea id="new-note-input" placeholder="Müşteri hakkında özel not yazın (Alerji, ürün tercihi, tırnak yapısı...)" style="width:100%; height:75px; background:var(--c-bg-3); border:1px solid var(--border-gold); color:var(--c-cream); border-radius:8px; padding:10px; font-family:var(--font-sans); font-size:0.82rem; margin-bottom:12px; outline:none; resize:none;"></textarea>
+            <div style="display:flex; justify-content:flex-end; gap:8px;">
+                <button class="btn btn-ghost" onclick="closeNotesModal()">Kapat</button>
+                <button class="btn" style="background:var(--c-gold); color:#121212; font-weight:600;" onclick="saveCustomerNote()">Notu Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Erteleme Modalı (Staff) -->
+<div id="modal-reschedule" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); z-index:200; align-items:center; justify-content:center;">
+    <div style="background:var(--c-bg-2); border:1px solid var(--border-gold-lg); border-radius:16px; width:90%; max-width:440px; padding:24px; box-shadow:0 12px 36px rgba(0,0,0,0.8);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="font-size:1.05rem; color:var(--c-gold);">Randevuyu Ertele / Tarih Değiştir</h3>
+            <button type="button" onclick="closeRescheduleModal()" style="background:transparent; border:none; color:var(--c-cream-muted); font-size:1.5rem; cursor:pointer; line-height:1;">&times;</button>
+        </div>
+        <form onsubmit="event.preventDefault(); submitReschedule();">
+            <input type="hidden" id="reschedule-appt-id">
+            <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--c-cream-muted); margin-bottom:4px;">Müşteri</label>
+                <div id="reschedule-customer-name" style="font-weight:600; color:var(--c-gold); font-size:0.9rem;">—</div>
+            </div>
+            <div style="margin-bottom:20px;">
+                <label style="display:block; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--c-cream-muted); margin-bottom:6px;" for="reschedule-datetime">Yeni Tarih ve Saat</label>
+                <input id="reschedule-datetime" type="datetime-local" required style="width:100%; padding:10px 12px; background:var(--c-bg-3); border:1px solid var(--border-gold); color:var(--c-cream); border-radius:8px; font-family:var(--font-sans); font-size:0.85rem; outline:none; color-scheme:dark;">
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:8px;">
+                <button type="button" class="btn btn-ghost" onclick="closeRescheduleModal()">Vazgeç</button>
+                <button type="submit" class="btn" style="background:var(--c-gold); color:#121212; font-weight:600;">Kaydet & Ertele</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Durum Yönetimi Modalı (Staff) -->
+<div id="modal-status" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); z-index:200; align-items:center; justify-content:center;">
+    <div style="background:var(--c-bg-2); border:1px solid var(--border-gold-lg); border-radius:16px; width:90%; max-width:420px; padding:24px; box-shadow:0 12px 36px rgba(0,0,0,0.8);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h3 style="font-size:1.05rem; color:var(--c-gold); display:flex; align-items:center; gap:6px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                Randevu Durumu Yönet
+            </h3>
+            <button type="button" onclick="closeStatusModal()" style="background:transparent; border:none; color:var(--c-cream-muted); font-size:1.5rem; cursor:pointer; line-height:1;">&times;</button>
+        </div>
+        
+        <input type="hidden" id="status-modal-appt-id">
+        
+        <div style="background:var(--c-bg-3); border:1px solid var(--border-gold); border-radius:10px; padding:12px 14px; margin-bottom:18px;">
+            <div style="font-size:0.88rem; font-weight:600; color:var(--c-cream); margin-bottom:4px;" id="status-modal-customer-name">—</div>
+            <div style="display:flex; align-items:center; gap:8px; font-size:0.78rem; color:var(--c-cream-muted);">
+                <span>Mevcut Durum:</span>
+                <span id="status-modal-current-badge">—</span>
+            </div>
+        </div>
+
+        <div style="font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--c-cream-muted); margin-bottom:10px;">
+            Yeni Durum Seçin
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;">
+            <button type="button" class="btn-status-option approved-opt" onclick="applyStatusChange('APPROVED')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="status-opt-dot" style="background:#6eb4f7;"></span>
+                    <span style="font-weight:600;">🔵 Onaylandı Olarak İşaretle</span>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+
+            <button type="button" id="status-btn-completed" class="btn-status-option completed-opt" onclick="applyStatusChange('COMPLETED')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="status-opt-dot" style="background:#5dc87c;"></span>
+                    <span style="font-weight:600;">🟢 Tamamlandı Olarak İşaretle</span>
+                </div>
+                <div id="status-completed-hint" style="font-size:0.75rem; opacity:0.9; display:flex; align-items:center; gap:4px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+            </button>
+
+            <button type="button" class="btn-status-option cancelled-opt" onclick="applyStatusChange('CANCELLED')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="status-opt-dot" style="background:#f07070;"></span>
+                    <span style="font-weight:600;">🔴 İptal Edildi Olarak İşaretle</span>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+
+            <button type="button" class="btn-status-option pending-opt" onclick="applyStatusChange('PENDING')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="status-opt-dot" style="background:var(--c-gold);"></span>
+                    <span style="font-weight:500;">🟡 Bekliyor (Onay Beklet)</span>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </button>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end;">
+            <button type="button" class="btn btn-ghost" onclick="closeStatusModal()" style="width:100%; justify-content:center;">Vazgeç</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── Auth Guard ────────────────────────────────────────────────────────────────
+const TOKEN = localStorage.getItem('nnb_token');
+const ROLE  = localStorage.getItem('nnb_role');
+const NAME  = localStorage.getItem('nnb_name') || 'Personel';
+
+if (!TOKEN || (ROLE !== 'STAFF' && ROLE !== 'SUPER_ADMIN')) {
+    window.location.href = '/login.html';
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('user-name-display').textContent = NAME;
+    document.getElementById('avatar-initials').textContent = NAME.charAt(0).toUpperCase();
+    document.getElementById('topbar-date').textContent = new Intl.DateTimeFormat('tr-TR', {
+        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    }).format(new Date());
+    loadProfile();
+    loadTodayAppointments();
+    loadProfileAllAppointments();
+});
+
+// ─── API Helper ───────────────────────────────────────────────────────────────
+async function api(path, options = {}) {
+    const res = await fetch(path, {
+        ...options,
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN, ...(options.headers || {}) }
+    });
+    if (res.status === 401 || res.status === 403) { logout(); return null; }
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || 'Sunucu hatası: ' + res.status);
+    }
+    if (res.status === 204) return null;
+    return res.json();
+}
+
+// ─── Toast ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, type = 'success') {
+    const el = document.getElementById('toast');
+    el.textContent = msg; el.className = 'toast show ' + type;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+// ─── Navigation ───────────────────────────────────────────────────────────────
+const PAGE_TITLES = { profile: 'Profilim', 'my-appointments': 'Randevularım', 'my-shifts': 'Vardiyalarım' };
+function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('nav-' + id).classList.add('active');
+    document.getElementById('page-title').textContent = PAGE_TITLES[id] || id;
+
+    if (id === 'profile') {
+        loadProfile();
+        loadTodayAppointments();
+        loadProfileAllAppointments();
+    } else if (id === 'my-appointments') {
+        loadMyAppointments();
+    } else if (id === 'my-shifts') {
+        loadMyShifts();
+    }
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function statusBadge(s) {
+    const map = { PENDING:['badge-pending','Bekliyor'], APPROVED:['badge-approved','Onaylandı'], COMPLETED:['badge-completed','Tamamlandı'], CANCELLED:['badge-cancelled','İptal'] };
+    const [cls, label] = map[s] || ['badge-pending', s];
+    return `<span class="badge ${cls}"><span class="badge-dot"></span>${label}</span>`;
+}
+function fmt(dt) {
+    return new Intl.DateTimeFormat('tr-TR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }).format(new Date(dt));
+}
+function fmtTimeOnly(dt) {
+    return new Intl.DateTimeFormat('tr-TR', { hour:'2-digit', minute:'2-digit' }).format(new Date(dt));
+}
+
+// ─── Row Renderer ─────────────────────────────────────────────────────────────
+function renderAppointmentRow(a, isTodayView = false) {
+    const safeCustomer = (a.customerName || 'Müşteri').replace(/'/g, "\\'");
+    const safePhone = a.customerPhone || '—';
+    const timeDisplay = isTodayView ? fmtTimeOnly(a.appointmentTime) : fmt(a.appointmentTime);
+
+    return `
+        <tr>
+            <td style="font-weight:500; color:var(--c-cream);">${a.customerName || '—'}</td>
+            <td style="color:var(--c-cream-muted); font-size:0.83rem;">${safePhone}</td>
+            <td style="color:var(--c-cream-muted);">${a.serviceName || '—'}</td>
+            <td style="color:var(--c-gold); font-size:0.83rem; font-weight:500;">${timeDisplay}</td>
+            <td>${statusBadge(a.status)}</td>
+            <td>
+                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                    <button class="btn-icon-sm" title="Durum Yönetimi (Onayla, Tamamla, İptal)" onclick="openStatusModal(${a.id}, '${a.status}', '${safeCustomer}', '${a.appointmentTime}')" style="width:auto; padding:0 10px; font-size:0.78rem; color:var(--c-gold); border-color:var(--border-gold); gap:4px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        Durum
+                    </button>
+                    <button class="btn-icon-sm" title="Ertele / Saati Değiştir" onclick="openRescheduleModal(${a.id}, '${a.appointmentTime}', '${safeCustomer}')" style="color:var(--c-gold); border-color:var(--border-gold);">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="12 14 12 11 14 11"/></svg>
+                    </button>
+                    <button class="btn-icon-sm" title="Müşteri Notları" onclick="openNotesModal('${safeCustomer}', '${safePhone}')" style="width:auto; padding:0 8px; font-size:0.75rem; color:var(--c-gold); border-color:var(--border-gold); gap:3px;">
+                        📝 Notlar
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `;
+}
+
+// ─── Status Management Modal Logic ───────────────────────────────────────────
+let currentStatusModalAppt = { id: null, status: null, time: null };
+
+function openStatusModal(id, currentStatus, customerName, appointmentTime) {
+    currentStatusModalAppt = { id, status: currentStatus, time: appointmentTime };
+    document.getElementById('status-modal-appt-id').value = id;
+    document.getElementById('status-modal-customer-name').textContent = 'Müşteri: ' + (customerName || ('Randevu #' + id));
+    document.getElementById('status-modal-current-badge').innerHTML = statusBadge(currentStatus);
+
+    const isFuture = appointmentTime ? (new Date(appointmentTime) > new Date()) : false;
+    const completedBtn = document.getElementById('status-btn-completed');
+    const completedHint = document.getElementById('status-completed-hint');
+
+    if (completedBtn) {
+        if (isFuture) {
+            completedBtn.classList.add('disabled-future');
+            completedBtn.title = 'Randevu saati henüz gelmedi';
+            if (completedHint) completedHint.innerHTML = '<span style="color:#f08080; font-size:0.73rem; font-weight:500;">⏳ Saati gelmedi</span>';
+        } else {
+            completedBtn.classList.remove('disabled-future');
+            completedBtn.title = 'Tamamlandı olarak işaretle';
+            if (completedHint) completedHint.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+        }
+    }
+
+    document.getElementById('modal-status').style.display = 'flex';
+}
+
+function closeStatusModal() {
+    document.getElementById('modal-status').style.display = 'none';
+}
+
+async function applyStatusChange(newStatus) {
+    if (!currentStatusModalAppt.id) return;
+    if (newStatus === 'COMPLETED' && currentStatusModalAppt.time) {
+        const apptDate = new Date(currentStatusModalAppt.time);
+        if (apptDate > new Date()) {
+            showToast('Randevu saati gelmeden işlem tamamlandı olarak işaretlenemez.', 'error');
+            return;
+        }
+    }
+    const id = currentStatusModalAppt.id;
+    closeStatusModal();
+    await updateApptStatus(id, newStatus);
+}
+
+// ─── Profile ──────────────────────────────────────────────────────────────────
+async function loadProfile() {
+    try {
+        const u = await api('/api/staff/me');
+        if (!u) return;
+        document.getElementById('prof-avatar').textContent = u.name.charAt(0).toUpperCase();
+        document.getElementById('prof-name').textContent = u.name;
+        document.getElementById('prof-email').textContent = '✉ ' + u.email;
+        document.getElementById('prof-phone').textContent = u.phone ? '📞 ' + u.phone : '';
+        document.getElementById('prof-role').textContent = u.role === 'SUPER_ADMIN' ? 'Yönetici' : 'Personel';
+    } catch(e) { console.error(e); }
+}
+
+// ─── Today's Appointments (Profilim -> Bar 1) ─────────────────────────────────
+async function loadTodayAppointments(isSilent = false) {
+    const today = new Date().toISOString().split('T')[0];
+    const tbody = document.getElementById('today-appts-tbody');
+    try {
+        let data = await api(`/api/staff/me/appointments?date=${today}`);
+        if (!data) return;
+        data.sort((a, b) => new Date(a.appointmentTime) - new Date(b.appointmentTime));
+
+        // Update badge and stat count
+        document.getElementById('today-badge-count').textContent = data.length + ' Randevu';
+        document.getElementById('stat-count-today').textContent = data.length;
+
+        if (!data.length) {
+            const emptyHtml = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--c-cream-muted)">Bugün için atanmış bir randevu yok 🎉</td></tr>';
+            if (tbody.innerHTML !== emptyHtml) tbody.innerHTML = emptyHtml;
+            return;
+        }
+
+        const newHtml = data.map(a => renderAppointmentRow(a, true)).join('');
+        if (tbody.innerHTML !== newHtml) {
+            tbody.innerHTML = newHtml;
+        }
+    } catch(e) {
+        if (!isSilent) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:#f08080">${e.message}</td></tr>`;
+        }
+    }
+}
+
+// ─── Profile All Appointments (Profilim -> Bar 2) ──────────────────────────────
+let rawProfileAllAppts = [];
+
+async function loadProfileAllAppointments(isSilent = false) {
+    const date = document.getElementById('prof-all-date-filter').value;
+    let url = '/api/staff/me/appointments';
+    if (date) url += '?date=' + date;
+    const tbody = document.getElementById('prof-all-appts-tbody');
+
+    if (!isSilent && (!tbody.hasChildNodes() || tbody.querySelector('.loading-row') || tbody.children.length === 0)) {
+        tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Yükleniyor…</td></tr>';
+    }
+    try {
+        let data = await api(url);
+        if (!data) return;
+
+        // Kronolojik sırala
+        data.sort((a, b) => new Date(a.appointmentTime) - new Date(b.appointmentTime));
+        rawProfileAllAppts = data;
+
+        // Toplam KPI istatistiklerini güncelle (tarih filtresi yokken doğru genel istatistik verir)
+        if (!date) {
+            document.getElementById('stat-count-all').textContent = data.length;
+            const pendingCount = data.filter(a => a.status === 'PENDING').length;
+            const completedCount = data.filter(a => a.status === 'COMPLETED').length;
+            document.getElementById('stat-count-pending').textContent = pendingCount;
+            document.getElementById('stat-count-completed').textContent = completedCount;
+        }
+
+        filterProfileAllAppointments();
+    } catch(e) {
+        if (!isSilent) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:32px;color:#f08080">${e.message}</td></tr>`;
+        }
+    }
+}
+
+function filterProfileAllAppointments() {
+    const statusVal = document.getElementById('prof-all-status-filter').value;
+    const searchVal = (document.getElementById('prof-all-search').value || '').trim().toLowerCase();
+    const tbody = document.getElementById('prof-all-appts-tbody');
+
+    let filtered = rawProfileAllAppts;
+
+    if (statusVal) {
+        filtered = filtered.filter(a => a.status === statusVal);
+    }
+    if (searchVal) {
+        filtered = filtered.filter(a => {
+            const cName = (a.customerName || '').toLowerCase();
+            const sName = (a.serviceName || '').toLowerCase();
+            const phone = (a.customerPhone || '').toLowerCase();
+            return cName.includes(searchVal) || sName.includes(searchVal) || phone.includes(searchVal);
+        });
+    }
+
+    document.getElementById('prof-all-badge-count').textContent = filtered.length + ' Randevu';
+
+    if (!filtered.length) {
+        const emptyHtml = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--c-cream-muted)">Kriterlere uygun randevu bulunamadı</td></tr>';
+        if (tbody.innerHTML !== emptyHtml) tbody.innerHTML = emptyHtml;
+        return;
+    }
+
+    const newHtml = filtered.map(a => renderAppointmentRow(a, false)).join('');
+    if (tbody.innerHTML !== newHtml) {
+        tbody.innerHTML = newHtml;
+    }
+}
+
+function clearProfileAllFilters() {
+    document.getElementById('prof-all-date-filter').value = '';
+    document.getElementById('prof-all-status-filter').value = '';
+    document.getElementById('prof-all-search').value = '';
+    loadProfileAllAppointments();
+}
+
+// ─── My Appointments Page (Randevularım Menüsü) ───────────────────────────────
+async function loadMyAppointments(isSilent = false) {
+    const date = document.getElementById('my-appt-date-filter').value;
+    let url = '/api/staff/me/appointments';
+    if (date) url += '?date=' + date;
+    const tbody = document.getElementById('my-appts-tbody');
+    if (!isSilent && (!tbody.hasChildNodes() || tbody.querySelector('.loading-row') || tbody.children.length === 0)) {
+        tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Yükleniyor…</td></tr>';
+    }
+    try {
+        let data = await api(url);
+        if (!data) return;
+
+        data.sort((a, b) => new Date(a.appointmentTime) - new Date(b.appointmentTime));
+
+        if (!data.length) {
+            const emptyHtml = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--c-cream-muted)">Randevu bulunamadı</td></tr>';
+            if (tbody.innerHTML !== emptyHtml) tbody.innerHTML = emptyHtml;
+            return;
+        }
+        const newHtml = data.map(a => renderAppointmentRow(a, false)).join('');
+        if (tbody.innerHTML !== newHtml) {
+            tbody.innerHTML = newHtml;
+        }
+    } catch(e) {
+        if (!isSilent) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:32px;color:#f08080">${e.message}</td></tr>`;
+        }
+    }
+}
+
+async function updateApptStatus(id, status) {
+    try {
+        await api(`/api/appointments/${id}/status`, {
+            method: 'PUT',
+            body: JSON.stringify({ status })
+        });
+        showToast('Randevu durumu güncellendi', 'success');
+        loadTodayAppointments(true);
+        loadProfileAllAppointments(true);
+        loadMyAppointments(true);
+    } catch(e) {
+        showToast(e.message, 'error');
+    }
+}
+
+function openRescheduleModal(id, currentIsoTime, customerName) {
+    document.getElementById('reschedule-appt-id').value = id;
+    document.getElementById('reschedule-customer-name').textContent = customerName || ('Müşteri #' + id);
+    if (currentIsoTime && currentIsoTime.length >= 16) {
+        document.getElementById('reschedule-datetime').value = currentIsoTime.substring(0, 16);
+    } else {
+        document.getElementById('reschedule-datetime').value = '';
+    }
+    document.getElementById('modal-reschedule').style.display = 'flex';
+}
+
+function closeRescheduleModal() {
+    document.getElementById('modal-reschedule').style.display = 'none';
+}
+
+async function submitReschedule() {
+    const id = document.getElementById('reschedule-appt-id').value;
+    const datetimeVal = document.getElementById('reschedule-datetime').value;
+    if (!datetimeVal) {
+        showToast('Lütfen yeni bir tarih ve saat seçin', 'error');
+        return;
+    }
+    const newAppointmentTime = datetimeVal.length === 16 ? datetimeVal + ':00' : datetimeVal;
+    try {
+        await api(`/api/appointments/${id}/reschedule`, {
+            method: 'PUT',
+            body: JSON.stringify({ newAppointmentTime })
+        });
+        showToast('Randevu tarihi ve saati ertelendi', 'success');
+        closeRescheduleModal();
+        loadTodayAppointments(true);
+        loadProfileAllAppointments(true);
+        loadMyAppointments(true);
+    } catch(e) {
+        showToast(e.message, 'error');
+    }
+}
+
+function clearMyFilter() {
+    document.getElementById('my-appt-date-filter').value = '';
+    loadMyAppointments();
+}
+
+// ─── Customer Notes Modal Functions ───────────────────────────────────────────
+let currentNoteCustomer = { name: '', phone: '' };
+
+async function openNotesModal(customerName, customerPhone) {
+    currentNoteCustomer = { name: customerName || 'Müşteri', phone: customerPhone || '' };
+    document.getElementById('notes-modal-title').textContent = `Müşteri Notları — ${customerName || ''}`;
+    document.getElementById('new-note-input').value = '';
+    document.getElementById('notes-modal').style.display = 'flex';
+    await loadCustomerNotes(customerPhone);
+}
+
+function closeNotesModal() {
+    document.getElementById('notes-modal').style.display = 'none';
+}
+
+async function loadCustomerNotes(phone) {
+    const container = document.getElementById('notes-modal-content');
+    if (!phone || phone === '—') {
+        container.innerHTML = '<p style="color:var(--c-cream-muted); font-size:0.85rem;">Müşteri telefon numarası bulunamadı.</p>';
+        return;
+    }
+    container.innerHTML = '<p style="color:var(--c-cream-muted); font-size:0.85rem;">Notlar yükleniyor…</p>';
+    try {
+        const notes = await api(`/api/customer-notes/search?phone=${encodeURIComponent(phone)}`);
+        if (!notes || notes.length === 0) {
+            container.innerHTML = '<p style="color:var(--c-cream-muted); font-size:0.85rem;">Bu müşteriye ait henüz bir özel not eklenmemiş.</p>';
+            return;
+        }
+        container.innerHTML = notes.map(n => `
+            <div style="background:var(--c-bg-3); border:1px solid rgba(201,168,76,0.15); border-radius:8px; padding:10px 12px; margin-bottom:8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span style="font-size:0.75rem; color:var(--c-gold); font-weight:500;">${fmt(n.createdAt)}</span>
+                    <button onclick="deleteCustomerNote(${n.id})" style="background:transparent; border:none; color:#f07070; cursor:pointer; font-size:1rem; padding:0 4px; line-height:1;" title="Notu Sil">&times;</button>
+                </div>
+                <div style="font-size:0.83rem; color:var(--c-cream); line-height:1.4; word-break:break-word;">${n.noteText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+            </div>
+        `).join('');
+    } catch(e) {
+        container.innerHTML = `<p style="color:#f08080; font-size:0.85rem;">Notlar alınamadı: ${e.message}</p>`;
+    }
+}
+
+async function saveCustomerNote() {
+    const noteText = document.getElementById('new-note-input').value.trim();
+    if (!noteText) {
+        showToast('Lütfen bir not metni girin', 'error');
+        return;
+    }
+    if (!currentNoteCustomer.phone || currentNoteCustomer.phone === '—') {
+        showToast('Geçerli bir telefon numarası bulunamadı', 'error');
+        return;
+    }
+    try {
+        await api('/api/customer-notes', {
+            method: 'POST',
+            body: JSON.stringify({
+                customerName: currentNoteCustomer.name,
+                customerPhone: currentNoteCustomer.phone,
+                noteText: noteText
+            })
+        });
+        showToast('Not başarıyla kaydedildi', 'success');
+        document.getElementById('new-note-input').value = '';
+        await loadCustomerNotes(currentNoteCustomer.phone);
+    } catch(e) {
+        showToast(e.message, 'error');
+    }
+}
+
+async function deleteCustomerNote(id) {
+    if (!confirm('Bu müşteri notunu silmek istediğinize emin misiniz?')) return;
+    try {
+        await api(`/api/customer-notes/${id}`, { method: 'DELETE' });
+        showToast('Not silindi', 'success');
+        await loadCustomerNotes(currentNoteCustomer.phone);
+    } catch(e) {
+        showToast(e.message, 'error');
+    }
+}
+
+// ─── My Shifts ────────────────────────────────────────────────────────────────
+const DAY_NAMES = { MONDAY:'Pzt', TUESDAY:'Sal', WEDNESDAY:'Çar', THURSDAY:'Per', FRIDAY:'Cum', SATURDAY:'Cmt', SUNDAY:'Paz' };
+const DAY_ORDER = ['MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','SUNDAY'];
+
+async function loadMyShifts(isSilent = false) {
+    const container = document.getElementById('shifts-container');
+    if (!isSilent && (!container.hasChildNodes() || container.children.length === 0)) {
+        container.innerHTML = '<div style="padding:32px;text-align:center;color:var(--c-cream-muted)">Yükleniyor…</div>';
+    }
+    try {
+        const data = await api('/api/staff/me/shifts');
+        if (!data) return;
+        if (!data.length) {
+            const emptyHtml = '<div style="padding:32px;text-align:center;color:var(--c-cream-muted)">Vardiya planı henüz oluşturulmadı</div>';
+            if (container.innerHTML !== emptyHtml) container.innerHTML = emptyHtml;
+            return;
+        }
+        // Day sıralamasına göre map
+        const shiftMap = {};
+        data.forEach(s => shiftMap[s.dayOfWeek] = s);
+        const html = `<div class="shift-grid">${DAY_ORDER.map(day => {
+            const s = shiftMap[day];
+            if (!s) return `<div class="shift-day"><div class="shift-day-name">${DAY_NAMES[day]}</div><div class="shift-day-time off">—</div></div>`;
+            if (s.offDay) return `<div class="shift-day"><div class="shift-day-name">${DAY_NAMES[day]}</div><div class="shift-day-time off">İzin</div></div>`;
+            return `<div class="shift-day"><div class="shift-day-name">${DAY_NAMES[day]}</div><div class="shift-day-time">${s.startTime}<br>—<br>${s.endTime}</div></div>`;
+        }).join('')}</div>`;
+        if (container.innerHTML !== html) {
+            container.innerHTML = html;
+        }
+    } catch(e) {
+        if (!isSilent) {
+            container.innerHTML = `<div style="padding:32px;text-align:center;color:#f08080">${e.message}</div>`;
+        }
+    }
+}
+
+// ─── Canlı Otomatik Senkronizasyon (Staff) ──────────────────────────────────
+setInterval(() => {
+    const activePage = document.querySelector('.page.active')?.id;
+    if (activePage === 'page-profile') {
+        loadTodayAppointments(true);
+        loadProfileAllAppointments(true);
+    } else if (activePage === 'page-my-appointments') {
+        loadMyAppointments(true);
+    }
+}, 10000);
+
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+        const activePage = document.querySelector('.page.active')?.id;
+        if (activePage === 'page-profile') {
+            loadProfile();
+            loadTodayAppointments(true);
+            loadProfileAllAppointments(true);
+        } else if (activePage === 'page-my-appointments') {
+            loadMyAppointments(true);
+        } else if (activePage === 'page-my-shifts') {
+            loadMyShifts(true);
+        }
+    }
+});
+
+// ─── Logout ───────────────────────────────────────────────────────────────────
+function logout() {
+    localStorage.removeItem('nnb_token');
+    localStorage.removeItem('nnb_role');
+    localStorage.removeItem('nnb_name');
+    window.location.href = '/login.html';
+}
+</script>
+</body>
+</html>

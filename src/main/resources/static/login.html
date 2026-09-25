@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noir Nail Bar — Yönetici Girişi</title>
+    <meta name="description" content="Noir Nail Bar yönetici paneli giriş sayfası.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --c-bg: #080808;
+            --c-bg-2: #111111;
+            --c-bg-3: #1a1a1a;
+            --c-gold: #c9a84c;
+            --c-gold-light: #e2c97e;
+            --c-gold-dark: #a07c32;
+            --c-cream: #f5f0e8;
+            --c-cream-muted: rgba(245,240,232,0.55);
+            --border-gold: rgba(201,168,76,0.2);
+            --border-gold-lg: rgba(201,168,76,0.45);
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Inter', system-ui, sans-serif;
+            --transition: 0.3s cubic-bezier(0.25,0.8,0.25,1);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100dvh;
+            background: var(--c-bg);
+            color: var(--c-cream);
+            font-family: var(--font-sans);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Arka plan efektleri */
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 30% at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 60%);
+        }
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        /* Kart */
+        .login-card {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            margin: 24px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid var(--border-gold);
+            border-radius: 20px;
+            padding: 48px 40px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 32px 64px rgba(0,0,0,0.6), inset 0 1px 0 rgba(201,168,76,0.1);
+        }
+        /* Logo */
+        .logo {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+        .logo-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            letter-spacing: 0.25em;
+            color: var(--c-cream);
+        }
+        .logo-title span { color: var(--c-gold); }
+        .logo-sub {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--c-cream-muted);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+        .logo-divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--c-gold), transparent);
+            margin: 14px auto 0;
+        }
+        /* Form */
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--c-cream-muted);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-input {
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            color: var(--c-cream);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            transition: var(--transition);
+            outline: none;
+        }
+        .form-input:focus {
+            border-color: var(--c-gold);
+            background: rgba(201,168,76,0.06);
+            box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+        }
+        .form-input::placeholder { color: rgba(245,240,232,0.25); }
+        /* Hata mesajı */
+        .error-msg {
+            display: none;
+            background: rgba(220,50,50,0.12);
+            border: 1px solid rgba(220,50,50,0.3);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.83rem;
+            color: #f08080;
+            margin-bottom: 20px;
+        }
+        .error-msg.visible { display: block; }
+        /* Buton */
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--c-gold-dark), var(--c-gold), var(--c-gold-light));
+            background-size: 200% 100%;
+            border: none;
+            border-radius: 10px;
+            color: #0a0a0a;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .btn-login:hover {
+            background-position: 100% 0;
+            box-shadow: 0 8px 24px rgba(201,168,76,0.4);
+            transform: translateY(-1px);
+        }
+        .btn-login:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(0,0,0,0.3);
+            border-top-color: #0a0a0a;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        .btn-login.loading .spinner { display: block; }
+        .btn-login.loading .btn-text { display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        /* Alt link */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.8rem;
+            color: var(--c-cream-muted);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .back-link:hover { color: var(--c-gold); }
+        .back-link svg { vertical-align: middle; margin-right: 4px; }
+    </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="bg-pattern"></div>
+
+<div class="login-card">
+    <div class="logo">
+        <div class="logo-title">NOIR <span>NAIL BAR</span></div>
+        <div class="logo-sub">Yönetici Girişi</div>
+        <div class="logo-divider"></div>
+    </div>
+
+    <div id="error-msg" class="error-msg" role="alert"></div>
+
+    <form id="login-form" onsubmit="handleLogin(event)" novalidate>
+        <div class="form-group">
+            <label class="form-label" for="email">E-posta Adresi</label>
+            <input
+                id="email"
+                class="form-input"
+                type="email"
+                placeholder="admin@noirnailbar.com"
+                autocomplete="email"
+                required
+            >
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="password">Şifre</label>
+            <input
+                id="password"
+                class="form-input"
+                type="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required
+            >
+        </div>
+        <button id="login-btn" class="btn-login" type="submit">
+            <div class="spinner"></div>
+            <span class="btn-text">Giriş Yap</span>
+        </button>
+    </form>
+
+    <a href="/" class="back-link">
+        <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 10H4M10 16l-6-6 6-6"/>
+        </svg>
+        Müşteri sayfasına dön
+    </a>
+</div>
+
+<script>
+async function handleLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('login-btn');
+    const errEl = document.getElementById('error-msg');
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    errEl.classList.remove('visible');
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    try {
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            throw new Error(data.message || 'E-posta veya şifre hatalı.');
+        }
+
+        const data = await res.json();
+        // Token ve kullanıcı bilgilerini sakla
+        localStorage.setItem('nnb_token', data.token);
+        localStorage.setItem('nnb_name', data.name);
+        localStorage.setItem('nnb_role', data.role);
+
+        // Role göre yönlendir
+        if (data.role === 'SUPER_ADMIN') {
+            window.location.href = '/admin.html';
+        } else if (data.role === 'STAFF') {
+            window.location.href = '/staff.html';
+        } else {
+            throw new Error('Bu hesabın panele erişim yetkisi yok.');
+        }
+    } catch (err) {
+        errEl.textContent = err.message;
+        errEl.classList.add('visible');
+        btn.classList.remove('loading');
+        btn.disabled = false;
+    }
+}
+
+// Zaten giriş yapmışsa yönlendir
+(function() {
+    const token = localStorage.getItem('nnb_token');
+    const role = localStorage.getItem('nnb_role');
+    if (token && role === 'SUPER_ADMIN') window.location.href = '/admin.html';
+    else if (token && role === 'STAFF') window.location.href = '/staff.html';
+})();
+</script>
+</body>
+</html>
